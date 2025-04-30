@@ -1,0 +1,39 @@
+{
+    "cli": {
+      "version": ">= 0.34.0"
+    },
+    "build": {
+      "development": {
+        "developmentClient": true,
+        "distribution": "internal",
+        "channel": "development",
+        "ios": {
+          "image": "latest"
+        }
+      },
+      "preview": {
+        "distribution": "internal",
+        "channel": "preview",
+        "ios": {
+          "image": "latest"
+        },
+        "android": {
+          "buildType": "apk"
+        }
+      },
+      "production": {
+        "channel": "production",
+        "ios": {
+          "image": "latest"
+        }
+      }
+    },
+    "submit": {
+      "production": {
+        "ios": {
+          "appleId": "ryan8440@gmail.com"
+        }
+      }
+    }
+  }
+  
