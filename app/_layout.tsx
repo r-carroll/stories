@@ -1,42 +1,54 @@
-import { useEffect } from 'react';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import { useFrameworkReady } from '@/hooks/useFrameworkReady';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Inter_400Regular, Inter_500Medium, Inter_700Bold } from '@expo-google-fonts/inter';
-import { SplashScreen } from 'expo-router';
-import { useColorScheme } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import { View } from 'react-native';
+import { Colors } from '../constants/Colors';
+import { Inter_400Regular, Inter_600SemiBold } from '@expo-google-fonts/inter';
+import { YoungSerif_400Regular } from '@expo-google-fonts/young-serif';
 
+// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  useFrameworkReady();
-  const colorScheme = useColorScheme();
-
-  const [fontsLoaded, fontError] = useFonts({
-    'Inter-Regular': Inter_400Regular,
-    'Inter-Medium': Inter_500Medium,
-    'Inter-Bold': Inter_700Bold,
+  const [loaded] = useFonts({
+    Inter: Inter_400Regular,
+    InterSemiBold: Inter_600SemiBold,
+    YoungSerif: YoungSerif_400Regular,
   });
 
   useEffect(() => {
-    if (fontsLoaded || fontError) {
+    if (loaded) {
       SplashScreen.hideAsync();
     }
-  }, [fontsLoaded, fontError]);
+  }, [loaded]);
 
-  if (!fontsLoaded && !fontError) {
+  if (!loaded) {
     return null;
   }
 
+  const MyDarkTheme = {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme.colors,
+      background: Colors.background,
+      card: Colors.surface,
+      text: Colors.text,
+      border: Colors.surface,
+      primary: Colors.primary,
+    },
+  };
+
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-    </GestureHandlerRootView>
+    <ThemeProvider value={MyDarkTheme}>
+      <View style={{ flex: 1, backgroundColor: Colors.background }}>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
+        <StatusBar style="light" />
+      </View>
+    </ThemeProvider>
   );
 }

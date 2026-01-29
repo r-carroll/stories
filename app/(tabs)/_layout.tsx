@@ -1,48 +1,47 @@
 import { Tabs } from 'expo-router';
-import { Chrome as Home, Users, Settings } from 'lucide-react-native';
-import { StyleSheet, View, useColorScheme } from 'react-native';
+import { Flame, Users, BookOpen } from 'lucide-react-native';
+import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Colors } from '../../constants/Colors';
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          ...styles.tabBar,
+          backgroundColor: Colors.surface,
+          borderTopColor: Colors.background,
           height: 60 + insets.bottom,
           paddingBottom: insets.bottom,
-          backgroundColor: isDark ? '#1C1C1E' : '#FFFFFF',
-          borderTopColor: isDark ? '#2C2C2E' : '#E5E5EA',
         },
-        tabBarActiveTintColor: '#007AFF',
-        tabBarInactiveTintColor: isDark ? '#8E8E93' : '#8E8E93',
+        tabBarActiveTintColor: Colors.primary,
+        tabBarInactiveTintColor: Colors.textMuted,
         tabBarLabelStyle: styles.tabBarLabel,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
+          title: 'Campfire',
+          tabBarIcon: ({ color, size }) => <Flame color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="history"
+        options={{
+          title: 'History',
+          tabBarIcon: ({ color, size }) => <BookOpen color={color} size={size} />,
         }}
       />
       <Tabs.Screen
         name="contacts"
         options={{
+          href: null, // Hidden for now, or use as friends list
           title: 'Contacts',
           tabBarIcon: ({ color, size }) => <Users color={color} size={size} />,
-        }}
-      />
-      <Tabs.Screen
-        name="settings"
-        options={{
-          title: 'Settings',
-          tabBarIcon: ({ color, size }) => <Settings color={color} size={size} />,
         }}
       />
     </Tabs>
@@ -50,13 +49,8 @@ export default function TabLayout() {
 }
 
 const styles = StyleSheet.create({
-  tabBar: {
-    backgroundColor: '#FFFFFF',
-    borderTopColor: '#E5E5EA',
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
   tabBarLabel: {
-    fontFamily: 'Inter-Medium',
+    fontFamily: 'Inter',
     fontSize: 12,
   },
 });
