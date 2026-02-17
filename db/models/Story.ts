@@ -21,4 +21,5 @@ export default class Story extends Model {
   @text('sentiment') sentiment!: string | null;
 
   @relation('users', 'author_id') author!: Relation<User>;
+  @relation('friendships', 'recipient_id') recipient!: Relation<Friendship>;
 }
