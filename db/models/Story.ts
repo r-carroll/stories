@@ -7,7 +7,6 @@ export default class Story extends Model {
 
   static associations = {
     users: { type: 'belongs_to' as const, key: 'author_id' },
-    friendships: { type: 'belongs_to' as const, key: 'recipient_id' },
   };
 
   @text('author_id') authorId!: string;
@@ -21,5 +20,5 @@ export default class Story extends Model {
   @text('sentiment') sentiment!: string | null;
 
   @relation('users', 'author_id') author!: Relation<User>;
-  @relation('friendships', 'recipient_id') recipient!: Relation<Friendship>;
+  @relation('users', 'recipient_id') recipient!: Relation<User>;
 }
