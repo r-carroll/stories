@@ -16,5 +16,5 @@ export default class User extends Model {
 
   @children('friendships') friendships: any;
   @children('stories') authoredStories: any;
-  @children('stories') receivedStories: any;
+  @children('received_stories') receivedStories: any;
 }
