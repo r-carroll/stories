@@ -3,7 +3,13 @@ import { Colors } from '../../constants/Colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFriendships, useUser } from '../../hooks/useDatabase';
 
-function FriendAvatar({ friendship }: { friendship: any }) {
+interface Friendship {
+  id: string | number;
+  userId: string | number;
+  untoldCount: number;
+}
+
+function FriendAvatar({ friendship }: { friendship: Friendship }) {
   const { user } = useUser(friendship.userId);
   
   if (!user) return null;
