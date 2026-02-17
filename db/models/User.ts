@@ -7,6 +7,7 @@ export default class User extends Model {
   static associations = {
     friendships: { type: 'has_many' as const, foreignKey: 'user_id' },
     stories: { type: 'has_many' as const, foreignKey: 'author_id' },
+    received_stories: { type: 'has_many' as const, foreignKey: 'recipient_id' },
   };
 
   @text('username') username!: string;
@@ -15,4 +16,5 @@ export default class User extends Model {
 
   @children('friendships') friendships: any;
   @children('stories') authoredStories: any;
+  @children('stories') receivedStories: any;
 }
