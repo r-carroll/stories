@@ -1,7 +1,6 @@
 import { Model, Relation } from '@nozbe/watermelondb';
 import { field, text, relation, children } from '@nozbe/watermelondb/decorators';
 import User from './User';
-import Story from './Story';
 
 export type FriendshipStatus = 'active' | 'pending' | 'blocked';
 
@@ -10,7 +9,6 @@ export default class Friendship extends Model {
 
   static associations = {
     users: { type: 'belongs_to' as const, key: 'user_id' },
-    stories: { type: 'has_many' as const, foreignKey: 'recipient_id' },
   };
 
   @text('user_id') userId!: string;
