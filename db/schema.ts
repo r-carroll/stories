@@ -30,7 +30,7 @@ export default appSchema({
         { name: 'is_shared', type: 'boolean' },
         { name: 'created_at', type: 'number' },
         { name: 'unlocked_at', type: 'number', isOptional: true },
-        { name: 'sentimient', type: 'string', isOptional: true },
+        { name: 'sentiment', type: 'string', isOptional: true },
       ],
     }),
   ],
