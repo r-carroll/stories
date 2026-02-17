@@ -1,22 +1,24 @@
-import { Database } from '@nozbe/watermelondb'
-import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'
+import { Database } from '@nozbe/watermelondb';
+import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
 
-import schema from './schema'
-// We will define models later and import them here
-// import Post from './model/Post' 
+import schema from './schema';
+import { User, Friendship, Story } from './models';
 
-// First, create the adapter to the underlying database:
+// Create the adapter to the underlying database
 const adapter = new SQLiteAdapter({
-    schema,
-    // (You might want to comment out migration events for now)
-    // migrations, 
-    // onSetUpError: error => { ... }
-})
+  schema,
+  jsi: true, // Use JSI for better performance (React Native)
+  onSetUpError: (error) => {
+    console.error('Database setup error:', error);
+  },
+});
 
-// Then, make a Watermelon database from it!
+// Create the Watermelon database instance
 export const database = new Database({
-    adapter,
-    modelClasses: [
-        // Post,
-    ],
-})
+  adapter,
+  modelClasses: [User, Friendship, Story],
+});
+
+// Export models for convenience
+export { User, Friendship, Story };
+export type { FriendshipStatus } from './models';
